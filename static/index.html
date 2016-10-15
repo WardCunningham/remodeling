@@ -1,0 +1,55 @@
+<script
+  src="http://code.jquery.com/jquery-3.1.1.js"
+  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+  crossorigin="anonymous">
+</script>
+
+<div id=page style="max-width: 500px; left:auto; margin: 20px;"></div>
+
+<script>
+
+  function escape (text) {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+  }
+  function emphasis (text) {
+    return text
+      .replace(/'''(.*?)'''/g, '<strong>$1<\/strong>')
+      .replace(/''(.*?)''/g, '<em>$1<\/em>')
+      .replace(/^-----*/, '<hr>')
+
+  }
+  function links (text) {
+    function anchor (title) {
+      var url = location.origin + location.pathname + "?" + title
+      return "<a href=\""  + url + "\">" + title + "</a>"
+    }
+    return text
+      .replace(/\b[A-Z][a-z]+([A-Z][a-z]+)+\b/g, anchor)
+  }
+  function render (text) {
+    text = escape(text)
+    text = emphasis(text)
+    text = links(text)
+    return "<p>" + text + '</p>'
+  }
+  function markup (text) {
+    var lines = text.replace(/\\\n/,' ').split(/\n/)
+    return lines.map(render).join("\n")
+
+  }
+  function show (page) {
+    $('#page').html(markup(page.text))
+  }
+
+  function init() {
+    title = location.search.match(/\w+/)||"WelcomeVisitors"
+    $.getJSON('/pages/' + title, show)
+  }
+
+  $(init)
+</script>
+  
