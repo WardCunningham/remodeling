@@ -56,7 +56,8 @@
   function have (data) {
     names = data.split(/\r?\n/)
     title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
-    $.getJSON('/pages/' + title, show)
+    prefix = location.pathname.replace(/[^\/]*$/, '')
+    $.getJSON(prefix + 'pages/' + title, show)
   }
   function init() {
     $.get('names.txt', have)
