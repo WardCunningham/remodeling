@@ -23,7 +23,6 @@
       .replace(/'''(.*?)'''/g, '<strong>$1<\/strong>')
       .replace(/''(.*?)''/g, '<em>$1<\/em>')
       .replace(/^-----*/, '<hr>')
-
   }
   function links (text) {
     function anchor (title) {
@@ -50,12 +49,13 @@
 
   }
   function show (page) {
-    body = "<h1>" + title + "</h1>" + markup(page.text)
+    var heading = title.replace(/([a-z])([A-Z])/g, '$1 $2');
+    var body = "<h1><img src=/wiki.gif width=40> " + heading + "</h1>" + markup(page.text)
     $('#page').html(body)
   }
   function have (data) {
     names = data.split(/\r?\n/)
-    title = location.search.match(/\w+/)||"WelcomeVisitors"
+    title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
     $.getJSON('/pages/' + title, show)
   }
   function init() {
