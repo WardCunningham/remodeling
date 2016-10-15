@@ -8,6 +8,9 @@
 
 <script>
 
+  var title
+  var names
+
   function escape (text) {
     return text
       .replace(/&/g, '&amp;')
@@ -24,8 +27,13 @@
   }
   function links (text) {
     function anchor (title) {
-      var url = location.origin + location.pathname + "?" + title
-      return "<a href=\""  + url + "\">" + title + "</a>"
+      if (names && names.includes(title)) {
+        var url = location.origin + location.pathname + "?" + title
+        return "<a href=\""  + url + "\">" + title + "</a>"      
+      } else {
+        // return "<font color=red>" + title + "</font>"
+        return title
+      }
     }
     return text
       .replace(/\b[A-Z][a-z]+([A-Z][a-z]+)+\b/g, anchor)
@@ -42,12 +50,16 @@
 
   }
   function show (page) {
-    $('#page').html(markup(page.text))
+    body = "<h1>" + title + "</h1>" + markup(page.text)
+    $('#page').html(body)
   }
-
-  function init() {
+  function have (data) {
+    names = data.split(/\r?\n/)
     title = location.search.match(/\w+/)||"WelcomeVisitors"
     $.getJSON('/pages/' + title, show)
+  }
+  function init() {
+    $.get('names.txt', have)
   }
 
   $(init)
