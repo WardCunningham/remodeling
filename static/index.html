@@ -9,6 +9,7 @@
 <script>
 
   var title
+  var prefix
   var names
 
   function escape (text) {
@@ -50,7 +51,7 @@
   }
   function show (page) {
     var heading = title.replace(/([a-z])([A-Z])/g, '$1 $2');
-    var body = "<h1><img src=/wiki.gif width=40> " + heading + "</h1>" + markup(page.text)
+    var body = "<h1><img src=" + prefix + "/wiki.gif width=40> " + heading + "</h1>" + markup(page.text)
     $('#page').html(body)
   }
   function have (data) {
