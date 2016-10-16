@@ -25,33 +25,58 @@
       .replace(/''(.*?)''/g, '<em>$1<\/em>')
       .replace(/^-----*/, '<hr>')
   }
-  function links (text) {
-    function anchor (title) {
+  function links (text, sanitize) {
+    // link conversion happens in four phases:
+    //   unexpected markers are adulterated
+    //   links are found, converted, and stashed away properly escaped
+    //   remaining text is processed and escaped
+    //   unique markers are replaced with unstashed links
+    var stashed = []
+    function stash (text) {
+      var here = stashed.length
+      stashed.push(text)
+      return "〖" + here + "〗"
+    }
+    function unstash (match, digits) {
+      return stashed[+digits]
+    }
+    function internal (title) {
       if (names && names.includes(title)) {
         var url = location.origin + location.pathname + "?" + title
-        return "<a href=\""  + url + "\">" + title + "</a>"      
+        return stash("<a href=\""  + url + "\">" + title + "</a>")
       } else {
-        // return "<font color=red>" + title + "</font>"
         return title
       }
     }
-    return text
-      .replace(/\b[A-Z][a-z]+([A-Z][a-z]+)+\b/g, anchor)
+    function external (url) {
+      if (url.match(/\.(gif|jpg|jpeg|png)$/)) {
+        return stash("<img src=\"" + url + "\">")
+      } else {
+        return stash("<a href=\"" + url + "\" rel=\"nofollow\">" + url + "</a>")
+      }
+    }
+    var prepass = text
+      .replace(/〖(\d+)〗/g, '〖 $1 〗')
+      .replace(/\b(http|ftp|mailto|file|telnet|news):[^\s<>\[\]"'\(\)]*[^\s<>\[\]"'\(\)\,\.\?]/g,external)
+      .replace(/\b[A-Z][a-z]+([A-Z][a-z]+)+\b/g, internal)
+    return sanitize(prepass)
+      .replace(/〖(\d+)〗/g, unstash)
   }
-  function render (text) {
+  function inner (text) {
     text = escape(text)
     text = emphasis(text)
-    text = links(text)
     return "<p>" + text + '</p>'
+  }
+  function render (text) {
+    return links(text, inner)
   }
   function markup (text) {
     var lines = text.replace(/\\\n/,' ').split(/\n/)
     return lines.map(render).join("\n")
-
   }
   function show (page) {
     var heading = title.replace(/([a-z])([A-Z])/g, '$1 $2');
-    var body = "<h1><img src=" + prefix + "/wiki.gif width=40> " + heading + "</h1>" + markup(page.text)
+    var body = "<h1><img src=" + prefix + "wiki.gif width=40> " + heading + "</h1>" + markup(page.text)
     $('#page').html(body)
   }
   function have (data) {
