@@ -9,3 +9,10 @@ requiring the least attention in years ahead.
 - [return wiki to 95% service](https://github.com/WardCunningham/remodeling/issues/1)
 - [full service static site](https://github.com/WardCunningham/remodeling/issues/2)
 - [integrate with read-write federated wiki pods](https://github.com/WardCunningham/remodeling/issues/3)
+
+# preview
+We have a test deployment running available for previewing.
+Review our checklists above to align your expectations.
+We're aware of missing data and all formats are provisional.
+
+http://c2.com/wiki/remodel
