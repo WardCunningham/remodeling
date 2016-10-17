@@ -4,7 +4,7 @@
   crossorigin="anonymous">
 </script>
 
-<div id=page style="max-width: 500px; left:auto; margin: 20px;"></div>
+<div id=page style="max-width: 500px; left:auto; margin: 0px;"></div>
 
 <script>
 
@@ -24,6 +24,56 @@
       .replace(/'''(.*?)'''/g, '<strong>$1<\/strong>')
       .replace(/''(.*?)''/g, '<em>$1<\/em>')
       .replace(/^-----*/, '<hr>')
+  }
+
+  var code = ''
+  var codes = []
+  function enter(key, replacement) {
+    // $code = $key;
+    // while (@code > $depth) {local($_) = pop @code; print "</$_>\n"}
+    // while (@code < $depth) {push (@code, $key); print "<$key>\n"}
+    // if ($code[$#code] ne $key) {
+    //   print "</$code[$#code]><$key>\n";
+    //   $code[$#code] = $key;
+    // }
+    return function (match, p1, p2) {
+      var depth = p1.length
+      var adjust = ''
+      code = key
+      if (code != '...') {
+        while (codes.length > depth) { adjust += "</" + codes.pop() + ">" }
+        while (codes.length < depth) { adjust += "<" + key + ">"; codes.push(key) }
+        if (codes[codes.length-1] != key) {
+          adjust += "</" + codes[codes.length-1] + "><" + key + ">"
+          codes[codes.length-1] = key
+        }
+      }
+      return adjust + replacement.replace(/{p2}/, p2)
+    }
+  }
+  function complete (text) {
+    return text + enter("", "")("","","")
+  }
+  function bullets (text) {
+    // $code = "";
+    // s/^\s*$/<p><\/p>/                && ($code = '...');
+    // s/^(\t+)(.+):\t/<dt>$2<dd>/      && &enter('DL', length $1);
+    // s/^(\t+)\*/<li>/                 && &enter('UL', length $1);
+    // s/^(\*+)/<li>/                   && &enter('UL', length $1);
+    // s/^(\t+)\d+\.?/<li>/             && &enter('OL', length $1);
+    // /^\s/                            && &enter('PRE', 1);
+    code = ''
+    result = text
+      .replace(/^\s*$/,                 enter('...', '<p></p>' ) )
+      .replace(/^(\t+)(.+):\t/,         enter('DL',  '<dt>{p2}<dd>') )
+      .replace(/^(\t+)\*/,              enter('UL',  '<li>') )
+      .replace(/^(\*+)/,                enter('UL',  '<li>') )
+      .replace(/^(\t+)\d+\.?/,          enter('OL',  '<li>') )
+      .replace(/^\s/,                   enter('PRE', ' ') )
+    if (code == '') {
+      result = complete(result)
+    }
+    return result
   }
   function links (text, sanitize) {
     // link conversion happens in four phases:
@@ -64,15 +114,16 @@
   }
   function inner (text) {
     text = escape(text)
+    text = bullets(text)
     text = emphasis(text)
-    return "<p>" + text + '</p>'
+    return text
   }
   function render (text) {
     return links(text, inner)
   }
   function markup (text) {
     var lines = text.replace(/\\\n/,' ').split(/\n/)
-    return lines.map(render).join("\n")
+    return complete(lines.map(render).join("\n"))
   }
   function show (page) {
     var heading = title.replace(/([a-z])([A-Z])/g, '$1 $2');
