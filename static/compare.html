@@ -3,6 +3,7 @@
 <td><iframe id=b src="http://c2.com/cgi/wikix?WelcomeVisitors" width=400 height=1000></iframe></td>
 </table>
 <script>
-  a.src = '/' + location.search
+  prefix = location.pathname.replace(/[^\/]*$/, '')
+  a.src = prefix + location.search
   b.src = 'http://c2.com/cgi/wikix' + location.search
 </script>
