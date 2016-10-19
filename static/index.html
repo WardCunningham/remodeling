@@ -37,13 +37,13 @@
     //   $code[$#code] = $key;
     // }
     return function (match, p1, p2) {
-      var depth = p1.length
+      var depth = p1.length || 0
       var adjust = ''
       code = key
       if (code != '...') {
         while (codes.length > depth) { adjust += "</" + codes.pop() + ">" }
         while (codes.length < depth) { adjust += "<" + key + ">"; codes.push(key) }
-        if (codes[codes.length-1] != key) {
+        if (codes.length && codes[codes.length-1] != key) {
           adjust += "</" + codes[codes.length-1] + "><" + key + ">"
           codes[codes.length-1] = key
         }
@@ -52,7 +52,7 @@
     }
   }
   function complete (text) {
-    return text + enter("", "")("","","")
+    return enter("", "")("","","") + text
   }
   function bullets (text) {
     // $code = "";
