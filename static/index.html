@@ -70,9 +70,6 @@
       .replace(/^(\*+)/,                enter('UL',  '<li>') )
       .replace(/^(\t+)\d+\.?/,          enter('OL',  '<li>') )
       .replace(/^\s/,                   enter('PRE', ' ') )
-    if (code == '') {
-      result = complete(result)
-    }
     return result
   }
   function links (text, sanitize) {
@@ -109,8 +106,12 @@
       .replace(/〖(\d+)〗/g, '〖 $1 〗')
       .replace(/\b(http|ftp|mailto|file|telnet|news):[^\s<>\[\]"'\(\)]*[^\s<>\[\]"'\(\)\,\.\?]/g,external)
       .replace(/\b[A-Z][a-z]+([A-Z][a-z]+)+\b/g, internal)
-    return sanitize(prepass)
+    var postpass = sanitize(prepass)
       .replace(/〖(\d+)〗/g, unstash)
+    if (code == '') {
+      postpass = complete(postpass)
+    }
+    return postpass
   }
   function inner (text) {
     text = escape(text)
