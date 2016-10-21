@@ -48,7 +48,7 @@
           codes[codes.length-1] = key
         }
       }
-      return adjust + replacement.replace(/{p2}/, p2)
+      return adjust + replacement.replace(/{p1}/, p1).replace(/{p2}/, p2)
     }
   }
   function complete (text) {
@@ -69,7 +69,7 @@
       .replace(/^(\t+)\*/,              enter('UL',  '<li>') )
       .replace(/^(\*+)/,                enter('UL',  '<li>') )
       .replace(/^(\t+)\d+\.?/,          enter('OL',  '<li>') )
-      .replace(/^\s/,                   enter('PRE', ' ') )
+      .replace(/^(\s)/,                 enter('PRE', '{p1}') )
     return result
   }
   function links (text, sanitize) {
