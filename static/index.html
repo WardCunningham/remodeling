@@ -105,7 +105,7 @@
     }
     function external (url) {
       if (url.match(/\.(gif|jpg|jpeg|png)$/)) {
-        return stash("<img src=\"" + url + "\">")
+        return stash("<img src=\"" + url.replace(/^http:\/wiki\//,'http://c2.com/wiki/') + "\">")
       } else {
         return stash("<a href=\"" + url + "\" rel=\"nofollow\">" + url + "</a>")
       }
@@ -143,14 +143,17 @@
       trouble('Character Translation Errors.')
     } else {
       var heading = title.replace(/([a-z])([A-Z])/g, '$1 $2');
-      var body = "<h1><img src=" + prefix + "wiki.gif width=40> " + heading + "</h1>" + markup(page.text)
-      $('#page').html(body)      
+      var body = "<h1><img src=wiki.gif width=40> " + heading + "</h1>" + markup(page.text)
+      var remodel = ", See <a href=https://github.com/WardCunningham/remodeling>github</a> about remodling."
+      var foot = "<hr>Last edit " + page.date + remodel
+      $('#page').html(body + foot)
     }
   }
   function have (data) {
     names = data.split(/\r?\n/)
     title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
     prefix = location.pathname.replace(/[^\/]*$/, '')
+    prefix = 'http://c2.com/wiki/remodel/'
     $.getJSON(prefix + 'pages/' + title, show)
       .fail(function(jqxhr, status, error) { trouble(error) })
   }
