@@ -148,7 +148,8 @@
   }
   function markup (text) {
     var lines = text.replace(/\\\n/,' ').split(/\n/)
-    return complete(lines.map(render).join("\n"))
+    var expand = lines.map(render).join("\n")
+    return expand + complete('')
   }
   function trouble (msg) {
     var recourse = "<br>See <a href=https://github.com/WardCunningham/remodeling/issues/2>github</a></p>"
