@@ -7,8 +7,9 @@ Encoding.default_external = Encoding::UTF_8
 
 def get file
   raw = `cat #{file} | ./a.out`
-  Hash[raw.split(/<<<<gs>>>>/).each_slice(2).to_a]
-rescue
+  it = Hash[raw.split(/<<<<gs>>>>/).each_slice(2).to_a]
+  {date:it['date'], text:it['text']}
+rescue Exception => e
   {}
 end
 
