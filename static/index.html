@@ -34,7 +34,6 @@
 <script>
 
   var title
-  var prefix
   var names
 
   function escape (text) {
@@ -169,9 +168,8 @@
   function have (data) {
     names = data.split(/\r?\n/)
     title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
-    prefix = location.pathname.replace(/[^\/]*$/, '')
-    prefix = 'http://c2.com/wiki/remodel/'
-    $.getJSON(prefix + 'pages/' + title, show)
+    database = 'http://c2.com/wiki/remodel/pages/'
+    $.getJSON(database + title, show)
       .fail(function(jqxhr, status, error) { trouble(error) })
   }
   function init() {
