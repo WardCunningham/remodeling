@@ -18,6 +18,14 @@
     margin: 15px;
     word-wrap: break-word;
   }
+  h1 {
+    display: flex;
+    align-items: baseline;
+  }
+  h1 span {
+    display: inline-block;
+    margin: 0 0 0 10px;
+  }
   img {
     max-width: 500px;
   }
@@ -159,11 +167,11 @@
     if (Object.keys(page).length == 0) {
       trouble('Character Translation Errors.')
     } else {
-      var heading = title.replace(/([a-z])([A-Z])/g, '$1 $2');
-      var body = "<h1><img src=wiki.gif width=40> " + heading + "</h1>" + markup(page.text)
+      var words = title.replace(/([a-z])([A-Z])/g, '$1 $2');
+      var head = "<h1><img src=wiki.gif> <div><span>" + words + "</span></div></h1>"
       var remodel = ", See <a href=https://github.com/WardCunningham/remodeling>github</a> about remodling."
       var foot = "<hr>Last edit " + page.date + remodel
-      $('#page').html(body + foot)
+      $('#page').html(head + markup(page.text) + foot)
     }
   }
   function have (data) {
