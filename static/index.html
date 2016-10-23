@@ -160,7 +160,7 @@
     return expand + complete('')
   }
   function trouble (msg) {
-    var recourse = "<br>See <a href=https://github.com/WardCunningham/remodeling/issues/2>github</a></p>"
+    var recourse = "<br>See <a href=https://github.com/WardCunningham/remodeling/issues/2 target=\"_blank\">github</a></p>"
     $('#page').html("<p>Trouble Encountered<br>" + msg + recourse)
   }
   function show (page) {
@@ -169,7 +169,7 @@
     } else {
       var words = title.replace(/([a-z])([A-Z])/g, '$1 $2');
       var head = "<h1><img src=wiki.gif> <div><span>" + words + "</span></div></h1>"
-      var remodel = ", See <a href=https://github.com/WardCunningham/remodeling>github</a> about remodling."
+      var remodel = ", See <a href=https://github.com/WardCunningham/remodeling target=\"_blank\">github</a> about remodling."
       var foot = "<hr>Last edit " + page.date + remodel
       $('#page').html(head + markup(page.text) + foot)
     }
