@@ -144,9 +144,18 @@
         "</object>"
       return stash(embed)
     }
+    function isbn (match, isbn) {
+      var code = isbn.replace(/[- ]/g, "")
+      if (code.match(/^\d{9}.$/)) {
+        return stash("<a href=\"http://www.amazon.com/exec/obidos/ISBN=" + code + "/portlandpatternrA/\" rel=\"nofollow\">ISBN " + isbn + "</a>")
+      } else {
+        return "ISBN " + isbn
+      }
+    }
     var prepass = text
       .replace(/〖(\d+)〗/g, '〖 $1 〗')
       .replace(/^http:\/\/(www.)?youtube.com\/watch\?v=([-\w]+)/, youtube)
+      .replace(/\[?ISBN:? *([0-9- xX]{10,})\]?/i, isbn)
       .replace(/\b(http|ftp|mailto|file|telnet|news):[^\s<>\[\]"'\(\)]*[^\s<>\[\]"'\(\)\,\.\?]/g,external)
       .replace(/\b[A-Z][a-z]+([A-Z][a-z]+)+\b/g, internal)
     var postpass = sanitize(prepass)
