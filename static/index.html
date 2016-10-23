@@ -33,6 +33,9 @@
     word-wrap: break-word;
     white-space: pre-wrap;
   }
+  a {
+    text-decoration: none;
+  }
 </style>
 
 <div id=page>
@@ -152,9 +155,33 @@
         return "ISBN " + isbn
       }
     }
+    function titlesearch () {
+      function link(text) {
+        return "<a href=?" + text + ">" + text + "</a>"
+      }
+      get = function() {
+        var want = search.value
+        if (want.length > 1) {
+          var found = names.filter(function (e) { return e.includes(want) })
+          if (found.length) {
+            return window.searchresult.innerHTML = found.slice(0,500).map(link).join('<br>')
+          }
+        }
+        window.searchresult.innerHTML = ''
+      }
+      got = function (e) {
+        if (!e) e = window.event;
+        if ((e.keyCode || e.which) == '13') {
+          search.value = ''
+          window.searchresult.innerHTML = ''
+        }
+      }
+      return stash("<input type=text size=40 id=search onInput='get()' onKeyPress='got()'><br><div id=searchresult></div>")
+    }
     var prepass = text
       .replace(/〖(\d+)〗/g, '〖 $1 〗')
       .replace(/^http:\/\/(www.)?youtube.com\/watch\?v=([-\w]+)/, youtube)
+      .replace(/\[Search\]/, titlesearch)
       .replace(/\[?ISBN:? *([0-9- xX]{10,})\]?/i, isbn)
       .replace(/\b(http|ftp|mailto|file|telnet|news):[^\s<>\[\]"'\(\)]*[^\s<>\[\]"'\(\)\,\.\?]/g,external)
       .replace(/\b[A-Z][a-z]+([A-Z][a-z]+)+\b/g, internal)
