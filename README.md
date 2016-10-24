@@ -10,9 +10,9 @@ requiring the least attention in years ahead.
 - [full service static site](https://github.com/WardCunningham/remodeling/issues/2)
 - [integrate with read-write federated wiki pods](https://github.com/WardCunningham/remodeling/issues/3)
 
-# preview
-We have a test deployment running available for previewing.
+# website
+We have a new site running and available for browsing.
 Review our checklists above to align your expectations.
-We're aware of missing data and all formats are provisional.
+We're aware of missing data and all formatting is provisional.
 
-http://c2.com/wiki/remodel
+http://wiki.c2.com/?WelcomeVisitors
