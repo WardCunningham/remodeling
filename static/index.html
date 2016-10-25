@@ -123,7 +123,7 @@
       return stashed[+digits]
     }
     function internal (title) {
-      if (names && names.includes(title)) {
+      if (names && names.indexOf(title)!=-1) {
         var url = location.origin + location.pathname + "?" + title
         return stash("<a href=\""  + url + "\">" + title + "</a>")
       } else {
