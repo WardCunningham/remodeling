@@ -215,7 +215,7 @@
     if (Object.keys(json).length == 0) {
       trouble('Character Translation Errors.')
     } else {
-      var words = title.replace(/([a-z])([A-Z])/g, '$1 $2');
+      var words = document.title = title.replace(/([a-z])([A-Z])/g, '$1 $2');
       var head = "<h1><img src=wiki.gif> <div><span>" + words + "</span></div></h1>"
       var remodel = ", See <a href=https://github.com/WardCunningham/remodeling target=\"_blank\">github</a> about remodling."
       var foot = "<hr>Last edit " + json.date + remodel
