@@ -222,20 +222,24 @@
       page.innerHTML = head + markup(json.text) + foot
     }
   }
-  function have (data) {
-    names = data.split(/\r?\n/)
+  function fetchNames () {
+    return fetch('names.txt')
+      .then(function(response) { return response.text() })
+      .catch(trouble)
+  }
+  function fetchPage () {
     title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
-    database = 'http://c2.com/wiki/remodel/pages/'
-    fetch(database + title, show)
+    var database = 'http://c2.com/wiki/remodel/pages/'
+    return fetch(database + title, show)
       .then(function(response) { return response.json() })
-      .then(show)
       .catch(trouble)
   }
   function init() {
-    fetch('names.txt')
-      .then(function(response) { return response.text() })
-      .then(have)
-      .catch(trouble)
+    Promise.all([fetchNames(), fetchPage()])
+      .then(function (data) {
+        names = data[0].split(/\r?\n/)
+        show(data[1])
+      })
   }
   init()
 
