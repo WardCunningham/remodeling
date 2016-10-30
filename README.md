@@ -7,7 +7,7 @@ http://c2.com/wiki/closed.html
 
 # process
 We will focus on restoring some service as soon as possible. Then advance a broader agenda in several more stages.
-Throught our remodel we will focus on simple implementation with minimum dependencies
+Throughtout our remodel we will focus on simple implementation with minimum dependencies
 requiring the least attention in years ahead.
 
 - [return wiki to 95% service](https://github.com/WardCunningham/remodeling/issues/1) ✔︎
