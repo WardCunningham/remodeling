@@ -222,24 +222,33 @@
       page.innerHTML = head + markup(json.text) + foot
     }
   }
-  function fetchNames () {
-    return fetch('names.txt')
-      .then(function(response) { return response.text() })
-      .catch(trouble)
+  function loadDoc(url, done) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4) {
+        if (this.status == 200) {
+          done(this.responseText)
+        } else {
+          trouble(url + "<br>can't fetch document<br>" + this.statusText)
+        }
+      }
+    }
+    xhttp.open("GET", url, true);
+    xhttp.send();
   }
-  function fetchPage () {
+  function fetchNames (done) {
+    loadDoc('names.txt', done)
+  }
+  function fetchPage (done) {
     title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
     var database = 'http://c2.com/wiki/remodel/pages/'
-    return fetch(database + title, show)
-      .then(function(response) { return response.json() })
-      .catch(trouble)
+    loadDoc(database + title, done)
   }
   function init() {
-    Promise.all([fetchNames(), fetchPage()])
-      .then(function (data) {
-        names = data[0].split(/\r?\n/)
-        show(data[1])
-      })
+    var json
+    function ready () { names && json && show(json) }
+    fetchNames(function(data) { names = data.split(/\r?\n/); ready()})
+    fetchPage(function(data) { json = JSON.parse(data); ready()})
   }
   init()
 
