@@ -184,7 +184,7 @@
       .replace(/\[Search\]/, titlesearch)
       .replace(/\[Fullsearch\]/, fullsearch)
       .replace(/\[?ISBN:? *([0-9- xX]{10,})\]?/i, isbn)
-      .replace(/\b(http|ftp|mailto|file|telnet|news):[^\s<>\[\]"'\(\)]*[^\s<>\[\]"'\(\)\,\.\?]/g,external)
+      .replace(/\b(https?|ftp|mailto|file|telnet|news):[^\s<>\[\]"'\(\)]*[^\s<>\[\]"'\(\)\,\.\?]/g,external)
       .replace(/\b[A-Z][a-z]+([A-Z][a-z]+)+\b/g, internal)
     var postpass = sanitize(prepass)
       .replace(/〖(\d+)〗/g, unstash)
