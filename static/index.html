@@ -212,15 +212,26 @@
     var recourse = "<br>See <a href=https://github.com/WardCunningham/remodeling/issues/2 target=\"_blank\">github</a></p>"
     page.innerHTML = "<p>Trouble Encountered<br>" + msg + recourse
   }
+  function head() {
+    var words = document.title = title.replace(/([a-z])([A-Z])/g, '$1 $2');
+    return [
+      '<h1><img src=wiki.gif><div><span>',
+      '<a href="http://c2.com/cgi/fullSearch?search=' + title + '" rel=nofollow>' + words + '</a>',
+      '</span></div></h1>'
+    ].join('')
+  }
+  function foot(json) {
+    return [
+      '<hr>Last edit ',
+      json.date,
+      ', See <a href=https://github.com/WardCunningham/remodeling target="_blank">github</a> about remodling.'
+    ].join('')
+  }
   function show (json) {
     if (Object.keys(json).length == 0) {
       trouble('Character Translation Errors.')
     } else {
-      var words = document.title = title.replace(/([a-z])([A-Z])/g, '$1 $2');
-      var head = "<h1><img src=wiki.gif> <div><span>" + words + "</span></div></h1>"
-      var remodel = ", See <a href=https://github.com/WardCunningham/remodeling target=\"_blank\">github</a> about remodling."
-      var foot = "<hr>Last edit " + json.date + remodel
-      page.innerHTML = head + markup(json.text) + foot
+      page.innerHTML = head() + markup(json.text) + foot(json)
     }
   }
   function loadDoc(url, done) {
