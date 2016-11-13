@@ -230,10 +230,17 @@
       ', See <a href=https://github.com/WardCunningham/remodeling target="_blank">github</a> about remodling.'
     ].join('')
   }
+  function anypage () {
+    var any = Math.floor(Math.random() * names.length)
+    return '*' + names[any]
+  }
   function show (json) {
     if (Object.keys(json).length == 0) {
       trouble('Character Translation Errors.')
     } else {
+      if (title == 'RandomPages') {
+        json.text = json.text.replace(/\*\w+/g, anypage)
+      }
       page.innerHTML = head() + markup(json.text) + foot(json)
     }
   }
