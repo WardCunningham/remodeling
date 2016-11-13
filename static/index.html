@@ -236,7 +236,7 @@
   }
   function show (json) {
     if (Object.keys(json).length == 0) {
-      trouble('Character Translation Errors.')
+      trouble('Page unavailable until conversion completed.')
     } else {
       if (title == 'RandomPages') {
         json.text = json.text.replace(/\*\w+/g, anypage)
