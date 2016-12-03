@@ -1,7 +1,12 @@
 # remodeling
-The original wiki rewritten as a single page application
+We're rewriting the original wiki as a single page application.
 
-We were closed for one week with the following explaination. We're open now and continuing to improve.
+Write privilages were withdrawn in 2015 after a disgruntled visitor threatened automated distruction.
+We described the situation then in one of our usual system notices.
+
+http://wiki.c2.com/?WikiWikiSystemNotice
+
+We were closed completely for one week this year with the following explaination. We're open now and continuing to improve.
 
 http://c2.com/wiki/closed.html
 
