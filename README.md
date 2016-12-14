@@ -1,7 +1,7 @@
 # Remodeling
 We're rewriting the original wiki as a single-page application.
 
-Write privilages were withdrawn in 2015 after a disgruntled visitor threatened automated destruction.
+Write privileges were withdrawn in 2015 after a disgruntled visitor threatened automated destruction.
 We described the situation then in one of our usual system notices.
 
 http://wiki.c2.com/?WikiWikiSystemNotice
