@@ -275,6 +275,14 @@
     fetchNames(function(data) { names = data.split(/\r?\n/); ready()})
     fetchPage(function(data) { json = JSON.parse(data); ready()})
   }
+
+  if (!window.location.origin) {
+    // https://github.com/WardCunningham/remodeling/issues/20
+    window.location.origin = window.location.protocol + '//' +
+      window.location.hostname +
+      (window.location.port ? (':' + window.location.port) : '');
+  }
+
   init()
 
 </script>
