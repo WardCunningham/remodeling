@@ -4,11 +4,11 @@ We're rewriting the original wiki as a single-page application.
 Write privileges were withdrawn in 2015 after a disgruntled visitor threatened automated destruction.
 We described the situation then in one of our usual system notices.
 
-http://wiki.c2.com/?WikiWikiSystemNotice
+https://wiki.c2.com/?WikiWikiSystemNotice
 
 We were closed completely for one week this year with the following explanation. We're open now and continuing to improve.
 
-http://c2.com/wiki/closed.html
+https://c2.com/wiki/closed.html
 
 # Process
 We will focus on restoring some service as soon as possible. Then advance a broader agenda in several more stages.
@@ -24,4 +24,4 @@ We have a new site running and available for browsing.
 Review our checklists above to align your expectations.
 We're aware of missing data and all formatting is provisional.
 
-http://wiki.c2.com/?WelcomeVisitors
+https://wiki.c2.com/?WelcomeVisitors
