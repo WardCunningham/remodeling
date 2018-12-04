@@ -5,4 +5,5 @@ my $SEP = "\263";
 $_ = join('', <STDIN>);
 s/\o{347}/c/g;
 s/\o{222}/'/g;
+s/\o{231}//g;
 print join('<<<<gs>>>>',split($SEP, $_));
