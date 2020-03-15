@@ -183,7 +183,7 @@
       return stash("<input type=text id=search onInput='get()' onKeyPress='got()'><br><div id=searchresult></div>")
     }
     function fullsearch () {
-      return stash("<form action=\"https://c2.com/cgi/fullSearch\"><input type=text name=search></form>")
+      return stash("<form action=\"https://proxy.c2.com/cgi/fullSearch\"><input type=text name=search></form>")
     }
     var prepass = text
       .replace(/〖(\d+)〗/g, '〖 $1 〗')
@@ -222,7 +222,7 @@
     var words = document.title = title.replace(/([a-z])([A-Z])/g, '$1 $2');
     return [
       '<h1><img src=wiki.gif><div><span>',
-      '<a href="https://c2.com/cgi/fullSearch?search=' + title + '" rel=nofollow>' + words + '</a>',
+      '<a href="https://proxy.c2.com/cgi/fullSearch?search=' + title + '" rel=nofollow>' + words + '</a>',
       '</span></div></h1>'
     ].join('')
   }
@@ -266,7 +266,7 @@
   }
   function fetchPage (done) {
     title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
-    var database = 'https://c2.com/wiki/remodel/pages/'
+    var database = 'https://proxy.c2.com/wiki/remodel/pages/'
     loadDoc(database + title, done)
   }
   function init() {
