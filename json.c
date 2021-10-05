@@ -1,20 +1,14 @@
-int main()
+#include <stdio.h>
+
+static int const MAGIC_GS = 0xb3;
+
+int main(void)
 {
 	int ch;
-	int getchar();
-	int putchar();
-	while ((ch=getchar())>0) {
-		if (ch==0263) {
-			putchar('<');
-			putchar('<');
-			putchar('<');
-			putchar('<');
-			putchar('g');
-			putchar('s');
-			putchar('>');
-			putchar('>');
-			putchar('>');
-			putchar('>');
+
+	while ( (ch = getchar()) != EOF) {
+		if (ch == MAGIC_GS) {
+			fputs("<<<<gs>>>>", stdout);
 		} else {
 			putchar(ch);
 		}
