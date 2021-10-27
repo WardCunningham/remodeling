@@ -3,44 +3,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="favicon.gif">
+<link rel="stylesheet" href="style.css">
 
 </head>
 <body>
-
-<style>
-  #page {
-    max-width: 500px;
-    margin: 15px;
-    word-wrap: break-word;
-  }
-  h1 {
-    display: flex;
-    align-items: baseline;
-  }
-  h1 span {
-    display: inline-block;
-    margin: 0 0 0 10px;
-  }
-  img {
-    max-width: 500px;
-  }
-  pre {
-    word-wrap: break-word;
-    white-space: pre-wrap;
-  }
-  a {
-    text-decoration: none;
-  }
-  input {
-    width: 60%;
-  }
-  ul, ol {
-    padding-left: 1em;
-  }
-  dd {
-    margin: 1em;
-  }
-</style>
 
 <noscript>
   <center>
@@ -56,7 +22,7 @@
  <img src="spin.gif">
 </div>
 
-<script>
+<script type=module>
 
   var title
   var names
@@ -112,7 +78,7 @@
     // s/^(\t+)\d+\.?/<li>/             && &enter('OL', length $1);
     // /^\s/                            && &enter('PRE', 1);
     code = ''
-    result = text
+    let result = text
       .replace(/^\s*$/,                 enter('...', '<p></p>' ) )
       .replace(/^(\t+)(.+):\t/,         enter('DL',  '<dt>{p2}<dd>') )
       .replace(/^(\t+)\*/,              enter('UL',  '<li>') )
@@ -226,7 +192,7 @@
   }
   function trouble (msg) {
     var recourse = "<br>See <a href=https://github.com/WardCunningham/remodeling/issues/2 target=\"_blank\">github</a></p>"
-    page.innerHTML = "<p>Trouble Encountered<br>" + msg + recourse
+    window.page.innerHTML = "<p>Trouble Encountered<br>" + msg + recourse
   }
   function head() {
     var words = document.title = title.replace(/([a-z])([A-Z])/g, '$1 $2');
@@ -254,7 +220,7 @@
       if (title == 'RandomPages') {
         json.text = json.text.replace(/\*\w+/g, anypage)
       }
-      page.innerHTML = head() + markup(json.text) + foot(json)
+      window.page.innerHTML = head() + markup(json.text) + foot(json)
     }
   }
   function loadDoc(url, done) {
