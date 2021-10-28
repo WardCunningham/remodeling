@@ -118,24 +118,23 @@
       function link(text) {
         return "<a href=?" + text + ">" + text + "</a>"
       }
-      window.get = function() {
-        var want = search.value
+      window.get = function(e) {
+        var want = e.target.value
         if (want.length > 1) {
           var found = names.filter(function (e) { return e.includes(want) })
           if (found.length) {
-            return window.searchresult.innerHTML = found.slice(0,500).map(link).join('<br>')
+            return e.target.nextSibling.innerHTML = '<br>'+found.slice(0,500).map(link).join('<br>')
           }
         }
-        window.searchresult.innerHTML = ''
       }
       window.got = function (e) {
         if (!e) e = window.event;
         if ((e.keyCode || e.which) == '13') {
-          search.value = ''
-          window.searchresult.innerHTML = ''
+          e.target.value = ''
+          e.target.nextSibling.innerHTML = ''
         }
       }
-      return stash("<input type=text id=search onInput='get()' onKeyPress='got()'><br><div id=searchresult></div>")
+      return stash("<input type=text onInput='get(event)' onKeyPress='got(event)'><div></div>")
     }
     function fullsearch () {
       return stash("<form action=\"https://proxy.c2.com/cgi/fullSearch\"><input type=text name=search></form>")
