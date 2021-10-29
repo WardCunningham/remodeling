@@ -1,10 +1,8 @@
 <html>
 <head>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="favicon.gif">
-<link rel="stylesheet" href="style.css">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.gif">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -24,24 +22,55 @@
 
 <script type=module>
 
-  var title
-  var names
+  let names = []
+  let json = {}
+
+  let title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
+  let database = 'https://proxy.c2.com/wiki/remodel/pages/'
 
   import {configure, markup} from "./markup.js"
 
+  // https://github.com/WardCunningham/remodeling/issues/20
+  if (!window.location.origin) {
+    window.location.origin = window.location.protocol + '//' +
+      window.location.hostname +
+      (window.location.port ? (':' + window.location.port) : '');
+  }
+
+  try {
+    [names, json] = await Promise.all([
+      fetch('names.txt').then(res => res.text()).then(text => text.split(/\r?\n/)),
+      fetch(database+title).then(res => res.json())
+    ])
+    configure({names})
+    if (Object.keys(json).length == 0) {
+      trouble('Page unavailable until conversion completed.')
+    } else {
+      if (title == 'RandomPages') {
+        const anyname = () => '*'+names[Math.floor(Math.random()*names.length)]
+        json.text = json.text.replace(/\*\w+/g, anyname)
+      }
+      window.page.innerHTML = head() + markup(json.text) + foot(json)
+    }
+  } catch (err) {
+    trouble(err.message)
+  }
+
 
   function trouble (msg) {
-    var recourse = "<br>See <a href=https://github.com/WardCunningham/remodeling/issues/2 target=\"_blank\">github</a></p>"
+    let recourse = "<br>See <a href=https://github.com/WardCunningham/remodeling/issues/2 target=\"_blank\">github</a></p>"
     window.page.innerHTML = "<p>Trouble Encountered<br>" + msg + recourse
   }
+
   function head() {
-    var words = document.title = title.replace(/([a-z])([A-Z])/g, '$1 $2');
+    let words = document.title = title.replace(/([a-z])([A-Z])/g, '$1 $2');
     return [
       '<h1><img src="https://proxy.c2.com/sig/wiki.gif"><div><span>',
       '<a href="https://proxy.c2.com/cgi/fullSearch?search=' + title + '" rel=nofollow>' + words + '</a>',
       '</span></div></h1>'
     ].join('')
   }
+
   function foot(json) {
     return [
       '<hr>Last edit ',
@@ -49,58 +78,6 @@
       ', See <a href=https://github.com/WardCunningham/remodeling target="_blank">github</a> about remodeling.'
     ].join('')
   }
-  function anypage () {
-    var any = Math.floor(Math.random() * names.length)
-    return '*' + names[any]
-  }
-  function show (json) {
-    configure({names})
-    if (Object.keys(json).length == 0) {
-      trouble('Page unavailable until conversion completed.')
-    } else {
-      if (title == 'RandomPages') {
-        json.text = json.text.replace(/\*\w+/g, anypage)
-      }
-      window.page.innerHTML = head() + markup(json.text) + foot(json)
-    }
-  }
-  function loadDoc(url, done) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4) {
-        if (this.status == 200) {
-          done(this.responseText)
-        } else {
-          trouble(url + "<br>can't fetch document<br>" + this.statusText)
-        }
-      }
-    }
-    xhttp.open("GET", url, true);
-    xhttp.send();
-  }
-  function fetchNames (done) {
-    loadDoc('names.txt', done)
-  }
-  function fetchPage (done) {
-    title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
-    var database = 'https://proxy.c2.com/wiki/remodel/pages/'
-    loadDoc(database + title, done)
-  }
-  function init() {
-    var json
-    function ready () { names && json && show(json) }
-    fetchNames(function(data) { names = data.split(/\r?\n/); ready()})
-    fetchPage(function(data) { json = JSON.parse(data); ready()})
-  }
-
-  if (!window.location.origin) {
-    // https://github.com/WardCunningham/remodeling/issues/20
-    window.location.origin = window.location.protocol + '//' +
-      window.location.hostname +
-      (window.location.port ? (':' + window.location.port) : '');
-  }
-
-  init()
 
 </script>
 </body>
