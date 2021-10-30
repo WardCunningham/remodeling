@@ -22,8 +22,13 @@
 
 <script type=module>
 
+
+// L A U N C H
+
   let names = []
   let json = {}
+  let inlinks = []
+  let infetch = fetch('inlinks.json').then(res => res.json())
 
   let title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
   let database = 'https://proxy.c2.com/wiki/remodel/pages/'
@@ -42,6 +47,14 @@
   } catch (err) {
     trouble(err.message)
   }
+
+  function trouble (msg) {
+    let recourse = "<br>See <a href=https://github.com/WardCunningham/remodeling/issues/2 target=\"_blank\">github</a></p>"
+    window.page.innerHTML = "<p>Trouble Encountered<br>" + msg + recourse
+  }
+
+
+//  L O O P
 
   document.addEventListener('click', internallinks)
 
@@ -80,17 +93,23 @@
     }
   }
 
-  function trouble (msg) {
-    let recourse = "<br>See <a href=https://github.com/WardCunningham/remodeling/issues/2 target=\"_blank\">github</a></p>"
-    window.page.innerHTML = "<p>Trouble Encountered<br>" + msg + recourse
+
+// F E A T U R E S
+
+  window.inlinks = async function (e) {
+    const link = text => `<a href=?${text}>${text}</a>`
+    if(!inlinks.length) {inlinks = await infetch}
+    let found = inlinks[names.indexOf(title)].map(link => names[link])
+    e.target.parentNode.parentNode.nextSibling.innerHTML = `<p>${found.map(link).join('<br>')}</p>`
+
   }
 
   function head() {
     let words = document.title = title.replace(/([a-z])([A-Z])/g, '$1 $2');
     return [
-      '<h1><img src="https://proxy.c2.com/sig/wiki.gif"><div><span>',
-      '<a href="https://proxy.c2.com/cgi/fullSearch?search=' + title + '" rel=nofollow target=_blank>' + words + '</a>',
-      '</span></div></h1>'
+      '<h1><img src="https://proxy.c2.com/sig/wiki.gif"><div>',
+      `<span style="color:blue;cursor: pointer;" onclick=inlinks(event)>${words}</span>`,
+      '</div></h1><div></div>'
     ].join('')
   }
 
