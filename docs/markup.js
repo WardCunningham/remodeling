@@ -1,9 +1,18 @@
-  export {configure, markup}
+  export {markup}
 
   var names
+  var options
 
-  function configure (options) {
+  function markup (text,opt) {
+    options = opt
     names = options.names
+    var lines = text.replace(/\\\n/,' ').split(/\n/)
+    var expand = lines.map(render).join("\n")
+    return expand + complete('')
+  }
+
+  function render (text) {
+    return links(text, inner)
   }
 
   function escape (text) {
@@ -83,8 +92,7 @@
     }
     function internal (title) {
       if (names && names.indexOf(title)!=-1) {
-        var url = location.origin + location.pathname + "?" + title
-        return stash("<a href=\""  + url + "\">" + title + "</a>")
+        return stash(`<a href=?${title}>${title}</a>`)
       } else {
         return title
       }
@@ -115,29 +123,10 @@
       }
     }
     function titlesearch () {
-      function link(text) {
-        return "<a href=?" + text + ">" + text + "</a>"
-      }
-      window.get = function(e) {
-        var want = e.target.value
-        if (want.length > 1) {
-          var found = names.filter(function (e) { return e.includes(want) })
-          if (found.length) {
-            return e.target.nextSibling.innerHTML = '<br>'+found.slice(0,500).map(link).join('<br>')
-          }
-        }
-      }
-      window.got = function (e) {
-        if (!e) e = window.event;
-        if ((e.keyCode || e.which) == '13') {
-          e.target.value = ''
-          e.target.nextSibling.innerHTML = ''
-        }
-      }
-      return stash("<input type=text onInput='get(event)' onKeyPress='got(event)'><div></div>")
+      return stash(options.titlesearch())
     }
     function fullsearch () {
-      return stash("<form action=\"https://proxy.c2.com/cgi/fullSearch\"><input type=text name=search></form>")
+      return stash(options.fullsearch())
     }
     var prepass = text
       .replace(/〖(\d+)〗/g, '〖 $1 〗')
@@ -159,12 +148,4 @@
     text = bullets(text)
     text = emphasis(text)
     return text
-  }
-  function render (text) {
-    return links(text, inner)
-  }
-  function markup (text) {
-    var lines = text.replace(/\\\n/,' ').split(/\n/)
-    var expand = lines.map(render).join("\n")
-    return expand + complete('')
   }

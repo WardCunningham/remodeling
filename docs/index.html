@@ -27,22 +27,48 @@
 
   let title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
   let database = 'https://proxy.c2.com/wiki/remodel/pages/'
+  let options = {titlesearch, fullsearch}
 
-  import {configure, markup} from "./markup.js"
-
-  // https://github.com/WardCunningham/remodeling/issues/20
-  if (!window.location.origin) {
-    window.location.origin = window.location.protocol + '//' +
-      window.location.hostname +
-      (window.location.port ? (':' + window.location.port) : '');
-  }
+  import {markup} from "./markup.js"
 
   try {
     [names, json] = await Promise.all([
       fetch('names.txt').then(res => res.text()).then(text => text.split(/\r?\n/)),
       fetch(database+title).then(res => res.json())
     ])
-    configure({names})
+    options.names = names
+    render(json)
+    history.pushState({title},'')
+  } catch (err) {
+    trouble(err.message)
+  }
+
+  document.addEventListener('click', internallinks)
+
+  window.onpopstate = async function(event) {
+    console.log('popstate',event.state)
+    if (event.state) {
+      title = event.state.title
+      json = await fetch(database+title).then(res => res.json())
+      render(json)
+    } else {
+      history.go(-1)
+    }
+  }
+
+  async function internallinks(event) {
+    if (event.target.tagName === 'A' && !event.target.getAttribute('target')) {
+      event.preventDefault()
+      let href = event.target.getAttribute('href')
+      console.log(href)
+      title = href.split('?').slice(-1)[0]
+      json = await fetch(database+title).then(res => res.json())
+      render(json)
+      history.pushState({title},'')
+    }
+  }
+
+  function render(json) {
     if (Object.keys(json).length == 0) {
       trouble('Page unavailable until conversion completed.')
     } else {
@@ -50,12 +76,9 @@
         const anyname = () => '*'+names[Math.floor(Math.random()*names.length)]
         json.text = json.text.replace(/\*\w+/g, anyname)
       }
-      window.page.innerHTML = head() + markup(json.text) + foot(json)
+      window.page.innerHTML = head() + markup(json.text,options) + foot(json)
     }
-  } catch (err) {
-    trouble(err.message)
   }
-
 
   function trouble (msg) {
     let recourse = "<br>See <a href=https://github.com/WardCunningham/remodeling/issues/2 target=\"_blank\">github</a></p>"
@@ -66,7 +89,7 @@
     let words = document.title = title.replace(/([a-z])([A-Z])/g, '$1 $2');
     return [
       '<h1><img src="https://proxy.c2.com/sig/wiki.gif"><div><span>',
-      '<a href="https://proxy.c2.com/cgi/fullSearch?search=' + title + '" rel=nofollow>' + words + '</a>',
+      '<a href="https://proxy.c2.com/cgi/fullSearch?search=' + title + '" rel=nofollow target=_blank>' + words + '</a>',
       '</span></div></h1>'
     ].join('')
   }
@@ -78,6 +101,40 @@
       ', See <a href=https://github.com/WardCunningham/remodeling target="_blank">github</a> about remodeling.'
     ].join('')
   }
+
+  window.get = function(e) {
+    const link = text => `<a href=?${text}>${text}</a>`
+    var want = e.target.value
+    if (want.length > 1) {
+      var found = names.filter(function (e) { return e.includes(want) })
+      if (found.length) {
+        return e.target.nextSibling.innerHTML = '<br>'+found.slice(0,500).map(link).join('<br>')
+      }
+    }
+  }
+  window.got = function (e) {
+    if (!e) e = window.event;
+    if ((e.keyCode || e.which) == '13') {
+      e.target.value = ''
+      e.target.nextSibling.innerHTML = ''
+    }
+  }
+
+  function titlesearch() {
+    return "<input type=text onInput='get(event)' onKeyPress='got(event)'><div></div>"
+  }
+
+  window.search = function (e) {
+    // return "<form action=\"https://proxy.c2.com/cgi/fullSearch\"><input type=text name=search></form>"
+
+    console.log('search',e.target.value)
+  }
+
+  function fullsearch() {
+    // return "<input type=text onKeyPress='search(event)'>"
+    return "<form action=\"https://proxy.c2.com/cgi/fullSearch\"><input type=text name=search></form>"
+  }
+
 
 </script>
 </body>
