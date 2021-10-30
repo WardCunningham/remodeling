@@ -38,7 +38,7 @@
     ])
     options.names = names
     render(json)
-    history.pushState({title},'')
+    history.pushState({title},'',location.href)
   } catch (err) {
     trouble(err.message)
   }
@@ -64,7 +64,7 @@
       title = href.split('?').slice(-1)[0]
       json = await fetch(database+title).then(res => res.json())
       render(json)
-      history.pushState({title},'')
+      history.pushState({title},'',href)
     }
   }
 
