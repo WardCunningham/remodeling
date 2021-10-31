@@ -78,7 +78,7 @@
       title = href.split('?').slice(-1)[0]
       json = await fetch(database+title).then(res => res.json())
       render(json)
-      document.body.scrollTop = 0
+      // document.body.scrollTop = 0 // seemed to break iphone??
       history.pushState({title},'',href)
     }
   }
