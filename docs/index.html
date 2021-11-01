@@ -17,7 +17,7 @@
   </center>
 </noscript>
   
-<div id=page>
+<div id=tab>
   <img src="spin.gif">
   <p>This site uses features not available on older iPhones.</a></p>
 </div>
@@ -44,7 +44,7 @@
       fetch(database+title).then(res => res.json())
     ])
     options.names = names
-    render(json)
+    window.tab.innerHTML = render(title,json)
     history.pushState({title},'',location.href)
   } catch (err) {
     trouble(err.message)
@@ -52,7 +52,7 @@
 
   function trouble (msg) {
     let recourse = "<br>See <a href=https://github.com/WardCunningham/remodeling/issues/2 target=\"_blank\">github</a></p>"
-    window.page.innerHTML = "<p>Trouble Encountered<br>" + msg + recourse
+    window.tab.innerHTML = "<p>Trouble Encountered<br>" + msg + recourse
   }
 
 
@@ -63,9 +63,9 @@
   window.onpopstate = async function(event) {
     console.log('popstate',event.state)
     if (event.state) {
-      title = event.state.title
+      let title = event.state.title
       json = await fetch(database+title).then(res => res.json())
-      render(json)
+      window.tab.innerHTML = render(title,json)
     } else {
       history.go(-1)
     }
@@ -75,16 +75,32 @@
     if (event.target.tagName === 'A' && !event.target.getAttribute('target')) {
       event.preventDefault()
       let href = event.target.getAttribute('href')
-      console.log(href)
-      title = href.split('?').slice(-1)[0]
+      let title = href.split('?').slice(-1)[0]
       json = await fetch(database+title).then(res => res.json())
-      render(json)
-      document.body.scrollTop = 0 // seemed to break iphone??
+      // window.tab.innerHTML = render(title,json)
+      let div = document.createElement('div')
+      div.innerHTML = render(title,json)
+      let page = div.firstChild
+      page.style.left = event.pageX
+      page.style.top = event.pageY
+      page.style.position = 'absolute'
+      // window.tab.insertBefore(page,window.tab.firstChild)
+      window.tab.insertBefore(page,null)
+      // document.body.scrollTop = 0
       history.pushState({title},'',href)
+    } else {
+      let keep = event.target.closest('.page')
+      console.log('keeping', keep)
+      if (keep) {
+        while(keep.nextElementSibling) {
+          console.log('removing', keep.nextElementSibling)
+          keep.nextSibling.remove()
+        }
+      }
     }
   }
 
-  function render(json) {
+  function render(title,json) {
     if (Object.keys(json).length == 0) {
       trouble('Page unavailable until conversion completed.')
     } else {
@@ -92,7 +108,7 @@
         const anyname = () => '*'+names[Math.floor(Math.random()*names.length)]
         json.text = json.text.replace(/\*\w+/g, anyname)
       }
-      window.page.innerHTML = head() + markup(json.text,options) + foot(json)
+      return `<div class="page" data-title="${title}">${head(title) + markup(json.text,options) + foot(json)}</div>`
     }
   }
 
@@ -100,6 +116,7 @@
 // F E A T U R E S
 
   window.inlinks = async function (e) {
+    let title = e.target.closest('.page').dataset.title
     const link = text => `<a href=?${text}>${text}</a>`
     if(!inlinks.length) {inlinks = await infetch}
     let found = inlinks[names.indexOf(title)].map(link => names[link])
@@ -107,7 +124,7 @@
 
   }
 
-  function head() {
+  function head(title) {
     let words = document.title = title.replace(/([a-z])([A-Z])/g, '$1 $2');
     return [
       '<h1><img src="https://proxy.c2.com/sig/wiki.gif"><div>',
