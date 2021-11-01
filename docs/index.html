@@ -18,41 +18,33 @@
 </noscript>
   
 <div id=page>
- <img src="spin.gif">
+  <img src="spin.gif">
+  <p>This site uses features not available on older iPhones.</a></p>
 </div>
 
 <script type=module>
 
 
 // L A U N C H
-window.page.innerHTML = 'launch<br>\n'
-
 
   let names = []
   let json = {}
   let inlinks = []
   let infetch = fetch('inlinks.json').then(res => res.json())
-window.page.innerHTML += 'inlinks<br>\n'
 
   let title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
   let database = 'https://proxy.c2.com/wiki/remodel/pages/'
   let options = {titlesearch, fullsearch}
-window.page.innerHTML += 'options<br>\n'
 
   import {markup} from "./markup.js"
-window.page.innerHTML += 'markup<br>\n'
 
   try {
     [names, json] = await Promise.all([
       fetch('names.txt').then(res => res.text()).then(text => text.split(/\r?\n/)),
       fetch(database+title).then(res => res.json())
     ])
-window.page.innerHTML += 'fetch<br>\n'
-
     options.names = names
     render(json)
-window.page.innerHTML += 'render<br>\n'
-
     history.pushState({title},'',location.href)
   } catch (err) {
     trouble(err.message)
