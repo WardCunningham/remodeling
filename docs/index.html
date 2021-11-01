@@ -48,11 +48,11 @@
     history.pushState({title},'',location.href)
   } catch (err) {
     trouble(err.message)
+    window.tab.innerHTML = `page does not exist`
   }
 
   function trouble (msg) {
-    let recourse = "<br>See <a href=https://github.com/WardCunningham/remodeling/issues/2 target=\"_blank\">github</a></p>"
-    window.tab.innerHTML = "<p>Trouble Encountered<br>" + msg + recourse
+    console.error('trouble', msg)
   }
 
 
@@ -136,8 +136,7 @@
   function foot(json) {
     return [
       '<hr>Last edit ',
-      json.date,
-      ', See <a href=https://github.com/WardCunningham/remodeling target="_blank">github</a> about remodeling.'
+      json.date
     ].join('')
   }
 
