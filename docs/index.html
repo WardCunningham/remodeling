@@ -166,8 +166,8 @@
     let url = `https://proxy.c2.com/cgi/fullSearch`
     if((e.keyCode || e.which) == '13') {
       let text = await fetch(`${url}?search=${e.target.value}`).then(res => res.text())
-      let html = '<br>'+text.split('<br>').slice(1,-1).join('<br>')
-      return e.target.nextSibling.innerHTML = html
+      let html = text.replace(/ href=wiki/g,' href=').split('<br>').slice(1,-1)
+      return e.target.nextSibling.innerHTML = '<br>'+html.join('<br>')
     }
   }
 
