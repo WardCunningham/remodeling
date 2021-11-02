@@ -162,15 +162,18 @@
     return "<input type=text onInput='get(event)' onKeyPress='got(event)'><div></div>"
   }
 
-  window.search = function (e) {
-    // return "<form action=\"https://proxy.c2.com/cgi/fullSearch\"><input type=text name=search></form>"
-
-    console.log('search',e.target.value)
+  window.search = async function (e) {
+    let url = `https://proxy.c2.com/cgi/fullSearch`
+    if((e.keyCode || e.which) == '13') {
+      let text = await fetch(`${url}?search=${e.target.value}`).then(res => res.text())
+      let html = '<br>'+text.split('<br>').slice(1,-1).join('<br>')
+      return e.target.nextSibling.innerHTML = html
+    }
   }
 
   function fullsearch() {
-    // return "<input type=text onKeyPress='search(event)'>"
-    return "<form action=\"https://proxy.c2.com/cgi/fullSearch\"><input type=text name=search></form>"
+    return "<input type=text onKeyPress='search(event)'><dev></dev>"
+    // return "<form action=\"https://proxy.c2.com/cgi/fullSearch\"><input type=text name=search></form>"
   }
 
 
