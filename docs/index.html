@@ -116,12 +116,17 @@
 // F E A T U R E S
 
   window.inlinks = async function (e) {
+    e.stopPropagation()
     let title = e.target.closest('.page').dataset.title
     const link = text => `<a href=?${text}>${text}</a>`
     if(!inlinks.length) {inlinks = await infetch}
-    let found = inlinks[names.indexOf(title)].map(link => names[link])
-    e.target.parentNode.parentNode.nextSibling.innerHTML = `<p>${found.map(link).join('<br>')}</p>`
-
+    let report = e.target.parentNode.parentNode.nextSibling
+    if (!report.innerHTML) {
+      let found = inlinks[names.indexOf(title)].map(link => names[link])
+      report.innerHTML = `<p>${found.map(link).join('<br>')}</p>`
+    } else {
+      report.innerHTML = ''
+    }
   }
 
   function head(title) {
