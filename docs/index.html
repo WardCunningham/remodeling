@@ -35,6 +35,7 @@
   let title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
   let database = 'https://proxy.c2.com/wiki/remodel/pages/'
   let options = {titlesearch, fullsearch}
+  window.tab.innerHTML = ''
 
   import {markup} from "./markup.js"
 
@@ -44,8 +45,11 @@
       fetch(database+title).then(res => res.json())
     ])
     options.names = names
-    window.tab.innerHTML = render(title,json)
-    history.pushState({title},'',location.href)
+    let page = rendered(title,json)
+    let style = `left: 0px; top: 0px; position: absolute;`
+    page.setAttribute('style',style)
+    window.tab.insertBefore(page,null)
+    history.pushState({title,style},'',location.href)
   } catch (err) {
     trouble(err.message)
     window.tab.innerHTML = `page does not exist`
@@ -64,8 +68,19 @@
     console.log('popstate',event.state)
     if (event.state) {
       let title = event.state.title
-      json = await fetch(database+title).then(res => res.json())
-      window.tab.innerHTML = render(title,json)
+      let style = event.state.style
+      let keep = window.tab.querySelector(`.page[data-title='${title}'][style='${style}']`)
+      if (keep) {
+        while(keep.nextElementSibling) {
+          console.log('removing', keep.nextElementSibling)
+          keep.nextSibling.remove()
+        }
+      } else {
+        json = await fetch(database+title).then(res => res.json())
+        let page = rendered(title,json)
+        page.setAttribute('style',style)
+        window.tab.insertBefore(page,null)
+      }
     } else {
       history.go(-1)
     }
@@ -77,17 +92,13 @@
       let href = event.target.getAttribute('href')
       let title = href.split('?').slice(-1)[0]
       json = await fetch(database+title).then(res => res.json())
-      // window.tab.innerHTML = render(title,json)
-      let div = document.createElement('div')
-      div.innerHTML = render(title,json)
-      let page = div.firstChild
+      let page = rendered(title,json)
       page.style.left = event.pageX
       page.style.top = event.pageY
       page.style.position = 'absolute'
-      // window.tab.insertBefore(page,window.tab.firstChild)
+      let style = page.getAttribute('style')
       window.tab.insertBefore(page,null)
-      // document.body.scrollTop = 0
-      history.pushState({title},'',href)
+      history.pushState({title, style},'',href)
     } else {
       let keep = event.target.closest('.page')
       console.log('keeping', keep)
@@ -98,6 +109,12 @@
         }
       }
     }
+  }
+
+  function rendered(title,json) {
+    let div = document.createElement('div')
+    div.innerHTML = render(title,json)
+    return div.firstChild
   }
 
   function render(title,json) {
