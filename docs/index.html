@@ -24,6 +24,7 @@
 
 <script type=module>
 
+  const uniq = (value, index, self) => self.indexOf(value) === index
 
 // L A U N C H
 
@@ -62,7 +63,7 @@
 
 //  L O O P
 
-  document.addEventListener('click', internallinks)
+  window.tab.addEventListener('click', internallinks)
 
   window.onpopstate = async function(event) {
     console.log('popstate',event.state)
@@ -148,10 +149,12 @@
 
   function head(title) {
     let words = document.title = title.replace(/([a-z])([A-Z])/g, '$1 $2');
+    let menu = `<button onclick=dodownload(event)>download</button>`
     return [
       '<h1><img src="https://proxy.c2.com/sig/wiki.gif"><div>',
       `<span style="color:blue;cursor: pointer;" onclick=inlinks(event)>${words}</span>`,
-      '</div></h1><div></div>'
+      '</div></h1><div></div>',
+      (title == 'WelcomeVisitors' ? `<p>${menu}</p>` : '')
     ].join('')
   }
 
@@ -160,6 +163,20 @@
       '<hr>Last edit ',
       json.date
     ].join('')
+  }
+
+  window.dodownload = function(e) {
+    e.stopPropagation()
+    let heads = window.tab.querySelectorAll('.page')
+    let data = Array.from(heads).map(page => {
+      let name = page.querySelector('span').innerText
+      let links = Array.from(page.querySelectorAll('a'))
+        .filter(a => !a.getAttribute('target'))
+        .map(a => a.innerText)
+        .filter(uniq)
+      return {name,links}
+    })
+    download(JSON.stringify(data,null,2),'wiki-pages-links.json')
   }
 
   window.get = function(e) {
@@ -196,6 +213,19 @@
   function fullsearch() {
     return "<input type=text onKeyPress='search(event)'><dev></dev>"
     // return "<form action=\"https://proxy.c2.com/cgi/fullSearch\"><input type=text name=search></form>"
+  }
+
+
+// U T I L I T I E S
+
+  function download(string, file) {
+    var data = "data:text/json;charset=utf-8," + encodeURIComponent(string);
+    var anchor = document.createElement('a');
+    anchor.setAttribute("href",     data);
+    anchor.setAttribute("download", file);
+    document.body.appendChild(anchor); // required for firefox
+    anchor.click();
+    anchor.remove();
   }
 
 
