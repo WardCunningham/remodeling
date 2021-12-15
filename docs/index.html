@@ -149,7 +149,9 @@
 
   function head(title) {
     let words = document.title = title.replace(/([a-z])([A-Z])/g, '$1 $2');
-    let menu = `<button onclick=dodownload(event)>download</button>`
+    let menu = `
+      <button onclick=dodownload(event)>download links</button>
+      <button onclick=doexport(event)>export as fedwiki</button>`
     return [
       '<h1><img src="https://proxy.c2.com/sig/wiki.gif"><div>',
       `<span style="color:blue;cursor: pointer;" onclick=inlinks(event)>${words}</span>`,
@@ -177,6 +179,27 @@
       return {name,links}
     })
     download(JSON.stringify(data,null,2),'wiki-pages-links.json')
+  }
+
+  window.doexport = async function(e) {
+    e.stopPropagation()
+    const asSlug = (title) => title.replace(/\s/g, '-').replace(/[^A-Za-z0-9-]/g, '').toLowerCase()
+    let exports = {}
+    let heads = window.tab.querySelectorAll('.page')
+    for (let page of Array.from(heads)) {
+      let title = page.querySelector('span').innerText
+      let paras = page.innerText.split(/\n\n/)
+      let date = new Date(paras.slice(-1)[0].split(' ').slice(-3).join(' ')).getTime()
+      let story = await Promise.all(paras.slice(0,-1).map(async text => {
+        let id = await sha1w(text)
+        return {type:'paragraph',text,id}
+      }))
+      let journal = [
+        {type:'create',date,item:JSON.parse(JSON.stringify(story))}
+      ]
+      exports[asSlug(title)] = {title,story,journal}
+    }
+    download(JSON.stringify(exports,null,2),'wiki-export-pages.json')
   }
 
   window.get = function(e) {
@@ -226,6 +249,12 @@
     document.body.appendChild(anchor); // required for firefox
     anchor.click();
     anchor.remove();
+  }
+
+  async function sha1w(str) {
+    const buf = await crypto.subtle.digest("SHA-1", new TextEncoder("utf-8").encode(str))
+    const hash = Array.prototype.map.call(new Uint8Array(buf), x=>(('00'+x.toString(16)).slice(-2))).join('')
+    return hash.slice(0,15)+'w'
   }
 
 
