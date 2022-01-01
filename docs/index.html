@@ -39,6 +39,7 @@
   window.tab.innerHTML = ''
 
   import {markup} from "./markup.js"
+  import {hex_md5} from "./md5.js"
 
   try {
     [names, json] = await Promise.all([
@@ -190,10 +191,11 @@
       let title = page.querySelector('span').innerText
       let paras = page.innerText.split(/\n\n/)
       let date = new Date(paras.slice(-1)[0].split(' ').slice(-3).join(' ')).getTime()
-      let story = await Promise.all(paras.slice(0,-1).map(async text => {
-        let id = await sha1w(text)
-        return {type:'paragraph',text,id}
-      }))
+      let story = paras.map(text => {
+        let id = md5w(text)
+        let wiki = title.replace(/ /g,'')
+        return {type:'paragraph',text,wiki,id}
+      })
       let journal = [
         {type:'create',date,item:JSON.parse(JSON.stringify(story))}
       ]
@@ -251,12 +253,10 @@
     anchor.remove();
   }
 
-  async function sha1w(str) {
-    const buf = await crypto.subtle.digest("SHA-1", new TextEncoder("utf-8").encode(str))
-    const hash = Array.prototype.map.call(new Uint8Array(buf), x=>(('00'+x.toString(16)).slice(-2))).join('')
-    return hash.slice(0,15)+'w'
+  function md5w(str) {
+    let hash = hex_md5(str)
+    return hash.slice(0,16)+'w'
   }
-
 
 </script>
 </body>

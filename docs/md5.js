@@ -18,20 +18,21 @@ var b64pad  = "";  /* base-64 pad character. "=" for strict RFC compliance   */
  * These are the functions you'll usually want to call
  * They take string arguments and return either hex or base-64 encoded strings
  */
-function hex_md5(s)    { return rstr2hex(rstr_md5(str2rstr_utf8(s))); }
-function b64_md5(s)    { return rstr2b64(rstr_md5(str2rstr_utf8(s))); }
-function any_md5(s, e) { return rstr2any(rstr_md5(str2rstr_utf8(s)), e); }
-function hex_hmac_md5(k, d)
+
+export function hex_md5(s)    { return rstr2hex(rstr_md5(str2rstr_utf8(s))); }
+export function b64_md5(s)    { return rstr2b64(rstr_md5(str2rstr_utf8(s))); }
+export function any_md5(s, e) { return rstr2any(rstr_md5(str2rstr_utf8(s)), e); }
+export function hex_hmac_md5(k, d)
   { return rstr2hex(rstr_hmac_md5(str2rstr_utf8(k), str2rstr_utf8(d))); }
-function b64_hmac_md5(k, d)
+export function b64_hmac_md5(k, d)
   { return rstr2b64(rstr_hmac_md5(str2rstr_utf8(k), str2rstr_utf8(d))); }
-function any_hmac_md5(k, d, e)
+export function any_hmac_md5(k, d, e)
   { return rstr2any(rstr_hmac_md5(str2rstr_utf8(k), str2rstr_utf8(d)), e); }
 
 /*
  * Perform a simple self-test to see if the VM is working
  */
-function md5_vm_test()
+export function md5_vm_test()
 {
   return hex_md5("abc").toLowerCase() == "900150983cd24fb0d6963f7d28e17f72";
 }
