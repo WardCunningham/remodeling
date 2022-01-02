@@ -1,0 +1,36 @@
+{
+  "title": "C2 Fed Roster",
+  "story": [
+    {
+      "type": "paragraph",
+      "text": "Sites with wiki.c2.com excerpts found Sun-0200.",
+      "id": "84823980980282"
+    },
+    {
+      "type": "roster",
+      "text": "found.ward.bay.wiki.org\ncode.fed.wiki.org",
+      "id": "23984712394812"
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "date": 1641159741435,
+      "item": {
+        "title": "C2 Fed Roster",
+        "story": [
+          {
+            "type": "paragraph",
+            "text": "Sites with wiki.c2.com excerpts found Sun-0200.",
+            "id": "84823980980282"
+          },
+          {
+            "type": "roster",
+            "text": "found.ward.bay.wiki.org\ncode.fed.wiki.org",
+            "id": "23984712394812"
+          }
+        ]
+      }
+    }
+  ]
+}
