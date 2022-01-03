@@ -1,8 +1,9 @@
 {
-  "last": "Mon-0200",
+  "last": "Mon-1400",
   "sites": [
     "found.ward.bay.wiki.org",
-    "code.fed.wiki.org"
+    "code.fed.wiki.org",
+    "marc.tries.fed.wiki"
   ],
   "slugs": [
     "feral-scooters-of-the-future",
@@ -11,7 +12,8 @@
     "bowling-score-spiked",
     "test-point",
     "foreign-currency",
-    "extreme-programming"
+    "extreme-programming",
+    "c2-for-me"
   ],
   "titles": [
     "Feral Scooters of the Future",
@@ -20,7 +22,8 @@
     "Bowling Score Spiked",
     "Test Point",
     "Foreign Currency",
-    "Extreme Programming"
+    "Extreme Programming",
+    "C2 for Me"
   ],
   "md5ws": [
     "7fd4e713e6400497w",
@@ -30,7 +33,11 @@
     "9ef6a558a74e7105w",
     "74152aae66076004w",
     "2f1cb7ad6d06c735w",
-    "630cab398719da03w"
+    "630cab398719da03w",
+    "77019e7ec8617643w",
+    "c6b36d9904f2b624w",
+    "f31c7d9022a32078w",
+    "faf579f581acfe8bw"
   ],
   "pages": [
     "BeepSpeek",
@@ -39,7 +46,11 @@
     "BowlingGameSpikes",
     "TestPoint",
     "MoneyObject",
-    "ExtremeProgramming"
+    "ExtremeProgramming",
+    "PatternsAsMemes",
+    "DramaticIdentity",
+    "WelcomeVisitors",
+    "MetaMagicalThemas"
   ],
   "rows": [
     [
@@ -97,6 +108,34 @@
       6,
       7,
       6
+    ],
+    [
+      2,
+      7,
+      7,
+      8,
+      7
+    ],
+    [
+      2,
+      7,
+      7,
+      9,
+      8
+    ],
+    [
+      2,
+      7,
+      7,
+      10,
+      9
+    ],
+    [
+      2,
+      7,
+      7,
+      11,
+      10
     ]
   ]
 }
