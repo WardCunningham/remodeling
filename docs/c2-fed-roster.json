@@ -3,7 +3,7 @@
   "story": [
     {
       "type": "paragraph",
-      "text": "Sites with wiki.c2.com excerpts found Sun-0200.",
+      "text": "Sites with wiki.c2.com excerpts found Mon-0200.",
       "id": "84823980980282"
     },
     {
@@ -15,13 +15,13 @@
   "journal": [
     {
       "type": "create",
-      "date": 1641159741435,
+      "date": 1641179566827,
       "item": {
         "title": "C2 Fed Roster",
         "story": [
           {
             "type": "paragraph",
-            "text": "Sites with wiki.c2.com excerpts found Sun-0200.",
+            "text": "Sites with wiki.c2.com excerpts found Mon-0200.",
             "id": "84823980980282"
           },
           {
