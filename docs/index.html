@@ -19,7 +19,7 @@
   
 <div id=tab>
   <img src="spin.gif">
-  <p>This site uses features not available on older iPhones.</a></p>
+  <p>This site uses features not available in older browsers.</a></p>
 </div>
 
 <script type=module>
@@ -29,6 +29,7 @@
 // L A U N C H
 
   let names = []
+  let index = {}
   let json = {}
   let inlinks = []
   let infetch = fetch('inlinks.json').then(res => res.json())
@@ -42,8 +43,9 @@
   import {hex_md5} from "./md5.js"
 
   try {
-    [names, json] = await Promise.all([
+    [names, index, json] = await Promise.all([
       fetch('names.txt').then(res => res.text()).then(text => text.split(/\r?\n/)),
+      fetch('c2-fed-index.json').then(res => res.json()),
       fetch(database+title).then(res => res.json())
     ])
     options.names = names
@@ -148,16 +150,27 @@
     }
   }
 
+  function excerptlink(name) {
+    // [siten,slugn,titlen,md5wn,pagen]
+    let pagen = index.pages.indexOf(name)
+    let row = index.rows[index.rows.findIndex(row => row[4] == pagen)]
+    let site = index.sites[row[0]]
+    let slug = index.slugs[row[1]]
+    let title = index.titles[row[2]]
+    return `<p>See fedwiki's <a href="http://${site}/${slug}.html" target=_blank>${title}</a><p>`
+  }
+
   function head(title) {
     let words = document.title = title.replace(/([a-z])([A-Z])/g, '$1 $2');
     let menu = `
-      <button onclick=dodownload(event)>download links</button>
-      <button onclick=doexport(event)>export as fedwiki</button>`
+      <button onclick=doexcerpts(event)>excerpted pages</button>
+      <button onclick=doexport(event)>export to fedwiki</button>`
     return [
       '<h1><img src="https://proxy.c2.com/sig/wiki.gif"><div>',
       `<span style="color:blue;cursor: pointer;" onclick=inlinks(event)>${words}</span>`,
       '</div></h1><div></div>',
-      (title == 'WelcomeVisitors' ? `<p>${menu}</p>` : '')
+      (title == 'WelcomeVisitors' ? `<p>${menu}</p><div></div>` : ''),
+      (index.pages.includes(title) ? excerptlink(title) : '')
     ].join('')
   }
 
@@ -168,18 +181,15 @@
     ].join('')
   }
 
-  window.dodownload = function(e) {
-    e.stopPropagation()
-    let heads = window.tab.querySelectorAll('.page')
-    let data = Array.from(heads).map(page => {
-      let name = page.querySelector('span').innerText
-      let links = Array.from(page.querySelectorAll('a'))
-        .filter(a => !a.getAttribute('target'))
-        .map(a => a.innerText)
-        .filter(uniq)
-      return {name,links}
-    })
-    download(JSON.stringify(data,null,2),'wiki-pages-links.json')
+  window.doexcerpts = async function(e) {
+    console.log(index.pages)
+    const link = text => `<a href=?${text}>${text}</a>`
+    let report = e.target.parentNode.nextSibling
+    if (!report.innerHTML) {
+      report.innerHTML = `<p>${index.pages.slice().sort().map(link).join('<br>')}</p>`
+    } else {
+      report.innerHTML = ''
+    }
   }
 
   window.doexport = async function(e) {
