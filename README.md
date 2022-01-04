@@ -17,7 +17,7 @@ requiring the least attention in years ahead.
 
 - [return wiki to 95% service](https://github.com/WardCunningham/remodeling/issues/1) ✔︎
 - [full service static site](https://github.com/WardCunningham/remodeling/issues/2)
-- [integrate with read-write federated wiki pods](https://github.com/WardCunningham/remodeling/issues/3)
+- [integrate with read-write federated wiki pods](https://github.com/WardCunningham/remodeling/issues/3) ✔︎
 
 # Website
 We have a new site running and available for browsing.
@@ -25,3 +25,11 @@ Review our checklists above to align your expectations.
 We're aware of missing data and all formatting is provisional.
 
 https://wiki.c2.com/?WelcomeVisitors
+
+# Integration
+We allow viewing more than one page at a time.
+We offer a button to export the visible pages in federated wiki format.
+Any author can import these translated page and drag content to supplement their own work.
+
+The federation scraper recognizes pages originating in the c2 wiki.
+These locations are fed back into the remodeled wiki where they appear as notices on excerpted pages.
