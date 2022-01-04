@@ -20,7 +20,7 @@ let list = await fetch(`${site}/logs`).then(res => res.text())
 let logs = list.trim().split(/\n/).map(line => line.split('"')[1])
 let seen = new Set()
 
-
+let had = index.rows.length
 for (let log of logs) {
   if(log.includes(index.last)) break
   console.error(new Date())
@@ -40,6 +40,12 @@ for (let log of logs) {
   }
   await sleep(500)
 }
+if (index.rows.length == had) {
+  console.error(`No new joins`)
+  Deno.exit(1)
+} else {
+  console.error(`${index.rows.length - had} new joins`)
+}
 
 function num (column, value) {
   let col = index[column]
@@ -50,6 +56,8 @@ function num (column, value) {
 }
 
 async function scan(log,who,what) {
+  const includes = row => index.rows.find(has =>
+    has[0]==row[0] && has[1]==row[1] && has[2]==row[2] && has[3]==row[3] && has[4]==row[4])
   let items = await fetch(`${site}/sites/${who}/pages/${asSlug(what)}/items.txt`).then(res => res.text())
   let md5ws = items.split(/\n/).filter(item => /^[0-9a-f]{16}w$/.test(item))
   if (!md5ws.length) return
@@ -62,7 +70,8 @@ async function scan(log,who,what) {
     let item = page.story.find(item => item.id == md5w)
     let md5wn = num('md5ws',md5w)
     let pagen = num('pages',item.wiki)
-    index.rows.push([siten,slugn,titlen,md5wn,pagen])
+    let row = [siten,slugn,titlen,md5wn,pagen]
+    if(!includes(row)) index.rows.push(row)
   }
   await sleep(500)
 }

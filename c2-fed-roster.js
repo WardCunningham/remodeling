@@ -15,6 +15,7 @@ const asSlug = (title) => title.replace(/\s/g, '-').replace(/[^A-Za-z0-9-]/g, ''
 // }
 
 let index = JSON.parse(Deno.readTextFileSync(`docs/c2-fed-index.json`))
+console.error(`${index.sites.length} sites as of ${index.last} `)
 let title = `C2 Fed Roster`
 let story = [
   {type:'paragraph',text:`Sites with wiki.c2.com excerpts found ${index.last}.`,id:'84823980980282'},
