@@ -3,30 +3,30 @@
   "story": [
     {
       "type": "paragraph",
-      "text": "Sites with wiki.c2.com excerpts found Mon-1400.",
+      "text": "Sites with wiki.c2.com excerpts found Wed-2000.",
       "id": "84823980980282"
     },
     {
       "type": "roster",
-      "text": "found.ward.bay.wiki.org\ncode.fed.wiki.org\nmarc.tries.fed.wiki",
+      "text": "found.ward.bay.wiki.org\ncode.fed.wiki.org\nmarc.tries.fed.wiki\nward.eu.wiki.org\nforage.rodwell.me",
       "id": "23984712394812"
     }
   ],
   "journal": [
     {
       "type": "create",
-      "date": 1641221726981,
+      "date": 1641415514573,
       "item": {
         "title": "C2 Fed Roster",
         "story": [
           {
             "type": "paragraph",
-            "text": "Sites with wiki.c2.com excerpts found Mon-1400.",
+            "text": "Sites with wiki.c2.com excerpts found Wed-2000.",
             "id": "84823980980282"
           },
           {
             "type": "roster",
-            "text": "found.ward.bay.wiki.org\ncode.fed.wiki.org\nmarc.tries.fed.wiki",
+            "text": "found.ward.bay.wiki.org\ncode.fed.wiki.org\nmarc.tries.fed.wiki\nward.eu.wiki.org\nforage.rodwell.me",
             "id": "23984712394812"
           }
         ]

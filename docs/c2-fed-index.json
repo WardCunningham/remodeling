@@ -1,9 +1,11 @@
 {
-  "last": "Mon-1400",
+  "last": "Wed-2000",
   "sites": [
     "found.ward.bay.wiki.org",
     "code.fed.wiki.org",
-    "marc.tries.fed.wiki"
+    "marc.tries.fed.wiki",
+    "ward.eu.wiki.org",
+    "forage.rodwell.me"
   ],
   "slugs": [
     "feral-scooters-of-the-future",
@@ -13,7 +15,9 @@
     "test-point",
     "foreign-currency",
     "extreme-programming",
-    "c2-for-me"
+    "c2-for-me",
+    "original-wiki-quotes",
+    "extreme-humility"
   ],
   "titles": [
     "Feral Scooters of the Future",
@@ -23,7 +27,9 @@
     "Test Point",
     "Foreign Currency",
     "Extreme Programming",
-    "C2 for Me"
+    "C2 for Me",
+    "Original Wiki Quotes",
+    "Extreme Humility"
   ],
   "md5ws": [
     "7fd4e713e6400497w",
@@ -37,7 +43,12 @@
     "77019e7ec8617643w",
     "c6b36d9904f2b624w",
     "f31c7d9022a32078w",
-    "faf579f581acfe8bw"
+    "faf579f581acfe8bw",
+    "0c490445809a506ew",
+    "699f6519d1948834w",
+    "9fef03f81900724ew",
+    "10822d0b9a93a3f8w",
+    "5f69df4c8757e27ew"
   ],
   "pages": [
     "BeepSpeek",
@@ -50,7 +61,10 @@
     "PatternsAsMemes",
     "DramaticIdentity",
     "WelcomeVisitors",
-    "MetaMagicalThemas"
+    "MetaMagicalThemas",
+    "EgolessProgramming",
+    "SystemsAsLivingThings",
+    "ExtremeHumility"
   ],
   "rows": [
     [
@@ -136,6 +150,48 @@
       7,
       11,
       10
+    ],
+    [
+      3,
+      7,
+      7,
+      10,
+      9
+    ],
+    [
+      4,
+      8,
+      8,
+      12,
+      11
+    ],
+    [
+      4,
+      8,
+      8,
+      13,
+      12
+    ],
+    [
+      4,
+      8,
+      8,
+      14,
+      12
+    ],
+    [
+      4,
+      9,
+      9,
+      15,
+      13
+    ],
+    [
+      4,
+      9,
+      9,
+      16,
+      13
     ]
   ]
 }
