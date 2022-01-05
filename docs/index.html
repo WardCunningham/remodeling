@@ -69,14 +69,12 @@
   window.tab.addEventListener('click', internallinks)
 
   window.onpopstate = async function(event) {
-    console.log('popstate',event.state)
     if (event.state) {
       let title = event.state.title
       let style = event.state.style
       let keep = window.tab.querySelector(`.page[data-title='${title}'][style='${style}']`)
       if (keep) {
         while(keep.nextElementSibling) {
-          console.log('removing', keep.nextElementSibling)
           keep.nextSibling.remove()
         }
       } else {
@@ -105,10 +103,8 @@
       history.pushState({title, style},'',href)
     } else {
       let keep = event.target.closest('.page')
-      console.log('keeping', keep)
       if (keep) {
         while(keep.nextElementSibling) {
-          console.log('removing', keep.nextElementSibling)
           keep.nextSibling.remove()
         }
       }
@@ -155,9 +151,14 @@
     let pagen = index.pages.indexOf(name)
     let row = index.rows[index.rows.findIndex(row => row[4] == pagen)]
     let site = index.sites[row[0]]
-    let slug = index.slugs[row[1]]
     let title = index.titles[row[2]]
-    return `<p>See fedwiki's <a href="http://${site}/${slug}.html" target=_blank>${title}</a><p>`
+    let url = `http://${site}`
+    for (let row of index.rows.filter(row => row[4] == pagen)) {
+      let site2 = index.sites[row[0]]
+      let slug2 = index.slugs[row[1]]
+      url += `/${site2 == site ? 'view' : site2}/${slug2}`
+    }
+    return `<p>See fedwiki's <a href="${url}" target=_blank>${title}</a><p>`
   }
 
   function head(title) {
@@ -182,7 +183,6 @@
   }
 
   window.doexcerpts = async function(e) {
-    console.log(index.pages)
     const link = text => `<a href=?${text}>${text}</a>`
     let report = e.target.parentNode.nextSibling
     if (!report.innerHTML) {
