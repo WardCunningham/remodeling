@@ -1,11 +1,13 @@
 {
-  "last": "Wed-2000",
+  "last": "Thu-2000",
   "sites": [
     "found.ward.bay.wiki.org",
     "code.fed.wiki.org",
     "marc.tries.fed.wiki",
     "ward.eu.wiki.org",
-    "forage.rodwell.me"
+    "forage.rodwell.me",
+    "thompson.fed.wiki",
+    "wellspring.fed.wiki"
   ],
   "slugs": [
     "feral-scooters-of-the-future",
@@ -17,7 +19,10 @@
     "extreme-programming",
     "c2-for-me",
     "original-wiki-quotes",
-    "extreme-humility"
+    "extreme-humility",
+    "test-page",
+    "noosphere",
+    "unbounded-consciousness"
   ],
   "titles": [
     "Feral Scooters of the Future",
@@ -29,7 +34,10 @@
     "Extreme Programming",
     "C2 for Me",
     "Original Wiki Quotes",
-    "Extreme Humility"
+    "Extreme Humility",
+    "Test Page",
+    "Noosphere",
+    "Unbounded Consciousness"
   ],
   "md5ws": [
     "7fd4e713e6400497w",
@@ -48,7 +56,10 @@
     "699f6519d1948834w",
     "9fef03f81900724ew",
     "10822d0b9a93a3f8w",
-    "5f69df4c8757e27ew"
+    "5f69df4c8757e27ew",
+    "3cbb265e4dc56d76w",
+    "ace3f3959e44fcdcw",
+    "2a057c092336d12fw"
   ],
   "pages": [
     "BeepSpeek",
@@ -64,7 +75,10 @@
     "MetaMagicalThemas",
     "EgolessProgramming",
     "SystemsAsLivingThings",
-    "ExtremeHumility"
+    "ExtremeHumility",
+    "CoCreateInstance",
+    "NooSphere",
+    "UnboundedConsciousness"
   ],
   "rows": [
     [
@@ -192,6 +206,27 @@
       9,
       16,
       13
+    ],
+    [
+      5,
+      10,
+      10,
+      17,
+      14
+    ],
+    [
+      6,
+      11,
+      11,
+      18,
+      15
+    ],
+    [
+      6,
+      12,
+      12,
+      19,
+      16
     ]
   ]
 }
