@@ -153,10 +153,13 @@
     let site = index.sites[row[0]]
     let title = index.titles[row[2]]
     let url = `http://${site}`
+    let done = new Set()
     for (let row of index.rows.filter(row => row[4] == pagen)) {
       let site2 = index.sites[row[0]]
       let slug2 = index.slugs[row[1]]
+      if (done.has(site2+slug2)) continue
       url += `/${site2 == site ? 'view' : site2}/${slug2}`
+      done.add(site2+slug2)
     }
     return `<p>See fedwiki's <a href="${url}" target=_blank>${title}</a><p>`
   }
