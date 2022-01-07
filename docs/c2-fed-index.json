@@ -1,5 +1,5 @@
 {
-  "last": "Thu-2000",
+  "last": "Fri-0200",
   "sites": [
     "found.ward.bay.wiki.org",
     "code.fed.wiki.org",
@@ -7,7 +7,8 @@
     "ward.eu.wiki.org",
     "forage.rodwell.me",
     "thompson.fed.wiki",
-    "wellspring.fed.wiki"
+    "wellspring.fed.wiki",
+    "ward.dojo.fed.wiki"
   ],
   "slugs": [
     "feral-scooters-of-the-future",
@@ -22,7 +23,8 @@
     "extreme-humility",
     "test-page",
     "noosphere",
-    "unbounded-consciousness"
+    "unbounded-consciousness",
+    "sudoku-helper"
   ],
   "titles": [
     "Feral Scooters of the Future",
@@ -37,7 +39,8 @@
     "Extreme Humility",
     "Test Page",
     "Noosphere",
-    "Unbounded Consciousness"
+    "Unbounded Consciousness",
+    "Sudoku Helper"
   ],
   "md5ws": [
     "7fd4e713e6400497w",
@@ -59,7 +62,9 @@
     "5f69df4c8757e27ew",
     "3cbb265e4dc56d76w",
     "ace3f3959e44fcdcw",
-    "2a057c092336d12fw"
+    "2a057c092336d12fw",
+    "82d47990f5a4fa77w",
+    "8a7c581abbad5d8dw"
   ],
   "pages": [
     "BeepSpeek",
@@ -78,7 +83,8 @@
     "ExtremeHumility",
     "CoCreateInstance",
     "NooSphere",
-    "UnboundedConsciousness"
+    "UnboundedConsciousness",
+    "SuDoku"
   ],
   "rows": [
     [
@@ -227,6 +233,20 @@
       12,
       19,
       16
+    ],
+    [
+      7,
+      13,
+      13,
+      20,
+      17
+    ],
+    [
+      7,
+      13,
+      13,
+      21,
+      17
     ]
   ]
 }

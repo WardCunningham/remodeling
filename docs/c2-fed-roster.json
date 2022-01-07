@@ -3,30 +3,30 @@
   "story": [
     {
       "type": "paragraph",
-      "text": "Sites with wiki.c2.com excerpts found Thu-2000.",
+      "text": "Sites with wiki.c2.com excerpts found Fri-0200.",
       "id": "84823980980282"
     },
     {
       "type": "roster",
-      "text": "found.ward.bay.wiki.org\ncode.fed.wiki.org\nmarc.tries.fed.wiki\nward.eu.wiki.org\nforage.rodwell.me\nthompson.fed.wiki\nwellspring.fed.wiki",
+      "text": "found.ward.bay.wiki.org\ncode.fed.wiki.org\nmarc.tries.fed.wiki\nward.eu.wiki.org\nforage.rodwell.me\nthompson.fed.wiki\nwellspring.fed.wiki\nward.dojo.fed.wiki",
       "id": "23984712394812"
     }
   ],
   "journal": [
     {
       "type": "create",
-      "date": 1641505708506,
+      "date": 1641526508777,
       "item": {
         "title": "C2 Fed Roster",
         "story": [
           {
             "type": "paragraph",
-            "text": "Sites with wiki.c2.com excerpts found Thu-2000.",
+            "text": "Sites with wiki.c2.com excerpts found Fri-0200.",
             "id": "84823980980282"
           },
           {
             "type": "roster",
-            "text": "found.ward.bay.wiki.org\ncode.fed.wiki.org\nmarc.tries.fed.wiki\nward.eu.wiki.org\nforage.rodwell.me\nthompson.fed.wiki\nwellspring.fed.wiki",
+            "text": "found.ward.bay.wiki.org\ncode.fed.wiki.org\nmarc.tries.fed.wiki\nward.eu.wiki.org\nforage.rodwell.me\nthompson.fed.wiki\nwellspring.fed.wiki\nward.dojo.fed.wiki",
             "id": "23984712394812"
           }
         ]
