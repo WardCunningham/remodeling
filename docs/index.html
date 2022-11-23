@@ -35,7 +35,7 @@
   let infetch = fetch('inlinks.json').then(res => res.json())
 
   let title = (location.search.match(/\w+/)||["WelcomeVisitors"])[0]
-  let database = 'https://proxy.c2.com/wiki/remodel/pages/'
+  let database = 'https://c2.com/wiki/remodel/pages/'
   let options = {titlesearch, fullsearch}
   window.tab.innerHTML = ''
 
@@ -170,7 +170,9 @@
       <button onclick=doexcerpts(event)>excerpted pages</button>
       <button onclick=doexport(event)>export to fedwiki</button>`
     return [
-      '<h1><img src="https://proxy.c2.com/sig/wiki.gif"><div>',
+      '<h1><img src="https://
+      
+      y.c2.com/sig/wiki.gif"><div>',
       `<span style="color:blue;cursor: pointer;" onclick=inlinks(event)>${words}</span>`,
       '</div></h1><div></div>',
       (title == 'WelcomeVisitors' ? `<p>${menu}</p><div></div>` : ''),
@@ -240,7 +242,7 @@
   }
 
   window.search = async function (e) {
-    let url = `https://proxy.c2.com/cgi/fullSearch`
+    let url = `https://c2.com/cgi/fullSearch`
     if((e.keyCode || e.which) == '13') {
       let text = await fetch(`${url}?search=${e.target.value}`).then(res => res.text())
       let html = text.replace(/ href=wiki/g,' href=').split('<br>').slice(1,-1)
@@ -250,7 +252,7 @@
 
   function fullsearch() {
     return "<input type=text onKeyPress='search(event)'><dev></dev>"
-    // return "<form action=\"https://proxy.c2.com/cgi/fullSearch\"><input type=text name=search></form>"
+    // return "<form action=\"https://c2.com/cgi/fullSearch\"><input type=text name=search></form>"
   }
 
 
